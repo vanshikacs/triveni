@@ -1,0 +1,77 @@
+@import "@fontsource/mukta/400.css";
+@import "@fontsource/mukta/500.css";
+@import "@fontsource/mukta/600.css";
+@import "@fontsource/mukta/700.css";
+@import "@fontsource/martel/600.css";
+@import "@fontsource/martel/800.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Mukta", system-ui, sans-serif;
+  --font-display: "Martel", Georgia, serif;
+
+  --color-paper: #f7f5ef;
+  --color-surface: #fffefa;
+  --color-ink: #1a1d29;
+  --color-muted: #5b6172;
+  --color-faint: #8a8f9c;
+  --color-line: #e2ddd0;
+  --color-line-strong: #cfc8b8;
+
+  --color-indigo: #24306b;
+  --color-indigo-2: #3a4a9e;
+  --color-indigo-wash: #eceef6;
+
+  --color-saffron: #b8711a;
+  --color-saffron-2: #d4913c;
+  --color-saffron-wash: #f7ecda;
+
+  --color-leaf: #3b7652;
+  --color-leaf-wash: #e6f0e8;
+
+  --color-alarm: #a63b2e;
+  --color-alarm-wash: #f6e5e1;
+
+  --radius-ctl: 6px;
+  --radius-panel: 10px;
+}
+
+@layer base {
+  html { background: var(--color-paper); color: var(--color-ink); }
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern";
+  }
+  :lang(hi), .hi { line-height: 1.7; }
+  ::selection { background: var(--color-indigo-wash); }
+  :focus-visible { outline: 2px solid var(--color-indigo-2); outline-offset: 2px; border-radius: 4px; }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+@layer components {
+  .num { font-variant-numeric: tabular-nums; }
+  .panel { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+  .hairline { border-color: var(--color-line); }
+  .field {
+    width: 100%; background: var(--color-surface); border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-ctl); padding: 0.55rem 0.75rem; color: var(--color-ink);
+    transition: border-color 120ms, box-shadow 120ms;
+  }
+  .field:focus { outline: none; border-color: var(--color-indigo-2); box-shadow: 0 0 0 3px var(--color-indigo-wash); }
+  .thread-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.1s cubic-bezier(.4,0,.2,1) forwards; }
+  .fade-in { animation: fadein 360ms ease-out both; }
+}
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.pulse-dot { animation: pulse-dot 1.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .thread-draw { animation: none; stroke-dashoffset: 0; }
+  .fade-in, .pulse-dot { animation: none; }
+}
